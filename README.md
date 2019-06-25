@@ -1,3 +1,4 @@
+# Documentation
 # API Specification and Requirements
 
 ---
@@ -12,7 +13,7 @@ interpreted as described in [RFC 2119].
 
 [RFC 2119]: http://www.ietf.org/rfc/rfc2119.txt
 
-**[⬆ back to home](../)**
+**[⬆ back to top](#documentation)**
 
 ---
 
@@ -36,7 +37,7 @@ All Attributes must be in **camelCase**.
 
 *Content-Type* MUST be: **application/json**.
 
-**[⬆ back to top](#markdown-header-table-of-contents)**
+**[⬆ back to top](#documentation)**
 
 ---
 
@@ -107,7 +108,7 @@ Example:
 
 A server MUST respond with 404 Not Found when processing a request to fetch a single resource that does not exist, except when the request warrants a 200 OK response with null as the primary data (as described above).
 
-**[⬆ back to top](#markdown-header-table-of-contents)**
+**[⬆ back to top](#documentation)**
 
 ---
 
@@ -165,6 +166,4 @@ Example:
 | 422 | If there are validation errors |
 
 
-**[⬆ back to top](#markdown-header-table-of-contents)**
-
----
+**[⬆ back to top](#documentation)**
