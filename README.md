@@ -19,12 +19,8 @@ interpreted as described in [RFC 2119].
 ## Table of Contents
 
 1. [General](#markdown-header-general)
-1. [Responses](#markdown-header-responses)
-1. [Sorting](#markdown-header-sorting)
-1. [Filtering](#markdown-header-filtering)
-1. [Pagination](#markdown-header-pagination)
-1. [Creating, Updating and Deleting Resources](#markdown-header-creating-updating-and-deleting-resources)
-1. [Errors](#markdown-header-errors)
+2. [Responses](#markdown-header-responses)
+3. [Errors](#markdown-header-errors)
 
 ---
 
@@ -35,10 +31,6 @@ Every document SHOULD contain at least one of the following **top-level members*
 - **data**: the document’s “primary data”
 
 - **errors**: array or errors in the right format
-
-- **pagination**: pagination data if it is used on that page
-
-- **meta**: some meta object.
 
 All Attributes must be in **camelCase**.
 
@@ -118,128 +110,6 @@ A server MUST respond with 404 Not Found when processing a request to fetch a si
 **[⬆ back to top](#markdown-header-table-of-contents)**
 
 ---
-
-### Sorting
-
-A server MAY choose to support requests to sort resource collections according to one or more criteria (“sort fields”).
-
-An endpoint MAY support requests to sort the primary data with a sort query parameter. The value for sort MUST represent sort fields.
-
-``
-GET /people?sort=age
-``
-
-An endpoint MAY support multiple sort fields by allowing comma-separated (U+002C COMMA, “,”) sort fields. Sort fields SHOULD be applied in the order specified.
-
-``
-GET /people?sort=age,name
-``
-
-The sort order for each sort field MUST be ascending unless it is prefixed with a minus (U+002D HYPHEN-MINUS, “-“), in which case it MUST be descending.
-
-``
-GET /articles?sort=-created,title
-``
-
-The above example should return the newest articles first. Any articles created on the same date will then be sorted by their title in ascending alphabetical order.
-
-If the server does not support sorting as specified in the query parameter sort, it MUST return **400 Bad Request**.
-
-**[⬆ back to top](#markdown-header-table-of-contents)**
-
----
-
-### Filtering
-
-To filter collection, frontend SHOULD set filtering value to the associated attribute name in the top query object.
-
-``
-GET /people?sort=age&username=tom&age=20
-``
-
-**[⬆ back to top](#markdown-header-table-of-contents)**
-
-
----
-
-
-### Pagination
-
-A server MAY choose to limit the number of resources returned in a response to a subset (“page”) of the whole set available.
-
-To make pagination request frontend SHOULD send query params in the next format:
-
-- **page**: page number to get
-- **limit**: items per page
-
-In server response should be pagination object in the next format: 
-
-- **currentPage**: current returned page
-- **totalPage**: total pages amount
-- **totlaRecord**: total record amount
-- **limit**: number of items per page
-
-Example:
-
-```json
-{
-  "data": [
-    {
-      "id": 1
-    },
-    {
-      "id": 2
-    }
-  ],
-  "pagination": {
-    "currentPage": 3,
-    "totalPage": 10,
-    "totalRecord": 92,
-    "limit": 10
-  }
-}
-```
-
-**[⬆ back to top](#markdown-header-table-of-contents)**
-
-
----
-
-
-### Creating, Updating and Deleting Resources
-
-A server MAY allow resources of a given type to be created. It MAY also allow existing resources to be modified or deleted.
-
-#### Creating Resources
-
-A resource can be created by sending a **POST** request to a URL that represents a collection of resources. The request MUST include a single resource object as primary data. 
-
-To create a resource with the relationship, relationships should be embedded in the resource object. 
-
-Example: 
-
-```json
-{
-  "data": {
-    "userName": "Tom",
-    "age": 22,
-    "userGroupId": 1,
-    "comments": [
-      {
-        "message": "cool first comment"
-      },
-      {
-        "message": "cool second comment"
-      }
-    ]
-  }
-}
-```
-
-**[⬆ back to top](#markdown-header-table-of-contents)**
-
----
-
 
 ### Errors
 
